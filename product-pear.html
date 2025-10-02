@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fresh Pear - Fruit Shop</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header role="banner">
+      <div class="header-center">
+        <a href="index.html" class="logo" aria-label="Go to homepage">
+          <img
+            src="img/fruit-shop-logo.webp"
+            class="logo-img"
+            alt="Fruit Shop Logo"
+          />
+          <span class="products-text" style="text-align: center">
+            View Products
+          </span>
+        </a>
+        <nav role="navigation" aria-label="Main navigation">
+          <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="bundles.html">Bundles</a>
+            <a href="personality-quiz.html" class="quiz-link">🌟 Fruit Quiz</a>
+          </div>
+          <a
+            href="basket.html"
+            class="basket-link"
+            aria-label="View shopping basket"
+            style="position: relative"
+          >
+            <img
+              src="img/basket-icon.png"
+              class="basket-img"
+              alt="Shopping basket icon"
+            />
+            <span class="basket-text">View shopping basket</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+    <main id="main-content" role="main">
+      <div class="content-box" style="text-align: center">
+        <div style="font-size: 4rem" role="img" aria-label="Pear emoji">
+          🍐
+        </div>
+        <h1>Pear</h1>
+        <div class="product-desc" aria-label="Product description">
+          Sweet, juicy, and perfect for any occasion (the butter fruit!).
+        </div>
+        <div style="margin-top: 1.2rem">
+          <button
+            id="addToBasket"
+            class="cart-action-btn"
+            aria-label="Add Pear to basket"
+          >
+            Add to Basket
+          </button>
+        </div>
+        <div id="factsContainer"></div>
+      </div>
+    </main>
+    <script src="shop.js"></script>
+    <script src="fruit-facts.js"></script>
+    <script>
+      document.getElementById("addToBasket").onclick = function () {
+        addToBasket("pear");
+      };
+      
+      // Add facts section
+      document.getElementById("factsContainer").innerHTML = createFactsSection("pear");
+      initFactsCarousel();
+    </script>
+  </body>
+</html>
