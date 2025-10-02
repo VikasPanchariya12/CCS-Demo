@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Account - Fruit Shop</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .profile-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+      }
+      
+      .profile-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        background: linear-gradient(135deg, #4CAF50, #45a049);
+        color: white;
+        border-radius: 10px;
+      }
+      
+      .profile-tabs {
+        display: flex;
+        margin-bottom: 2rem;
+        border-bottom: 2px solid #eee;
+      }
+      
+      .tab-btn {
+        flex: 1;
+        padding: 1rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: bold;
+        color: #666;
+        transition: all 0.3s;
+      }
+      
+      .tab-btn.active {
+        color: #4CAF50;
+        border-bottom: 3px solid #4CAF50;
+      }
+      
+      .tab-content {
+        display: none;
+      }
+      
+      .tab-content.active {
+        display: block;
+      }
+      
+      .profile-form {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      
+      .form-group {
+        margin-bottom: 1rem;
+      }
+      
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        color: #333;
+      }
+      
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+        box-sizing: border-box;
+      }
+      
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: #4CAF50;
+      }
+      
+      .btn {
+        background: #4CAF50;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      
+      .btn:hover {
+        background: #45a049;
+      }
+      
+      .btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+      
+      .orders-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .order-card {
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      
+      .order-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+      }
+      
+      .order-id {
+        font-weight: bold;
+        color: #4CAF50;
+      }
+      
+      .order-status {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        text-transform: capitalize;
+      }
+      
+      .order-status.pending {
+        background: #fff3cd;
+        color: #856404;
+      }
+      
+      .order-status.confirmed {
+        background: #d1ecf1;
+        color: #0c5460;
+      }
+      
+      .order-status.preparing {
+        background: #f8d7da;
+        color: #721c24;
+      }
+      
+      .order-status.out_for_delivery {
+        background: #d4edda;
+        color: #155724;
+      }
+      
+      .order-status.delivered {
+        background: #d4edda;
+        color: #155724;
+      }
+      
+      .order-items {
+        margin-bottom: 1rem;
+      }
+      
+      .order-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+      }
+      
+      .order-total {
+        text-align: right;
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: #4CAF50;
+      }
+      
+      .message {
+        padding: 0.75rem;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+      
+      .message.success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+      
+      .message.error {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+      
+      .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: #666;
+      }
+      
+      .empty-state h3 {
+        margin-bottom: 1rem;
+      }
+      
+      .track-btn {
+        background: #17a2b8;
+        color: white;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 0.5rem;
+      }
+      
+      .track-btn:hover {
+        background: #138496;
+      }
+    </style>
+  </head>
+  <body>
+    <header role="banner">
+      <div class="header-center">
+        <a href="index.html" class="logo" aria-label="Go to homepage">
+          <img
+            src="img/fruit-shop-logo.webp"
+            class="logo-img"
+            alt="Fruit Shop Logo"
+          />
+          <span class="products-text" style="text-align: center">
+            View Products
+          </span>
+        </a>
+        <nav role="navigation" aria-label="Main navigation">
+          <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="bundles.html">Bundles</a>
+            <a href="personality-quiz.html" class="quiz-link">🌟 Fruit Quiz</a>
+          </div>
+          <div class="auth-links"></div>
+          <a
+            href="basket.html"
+            class="basket-link"
+            aria-label="View shopping basket"
+            style="position: relative"
+          >
+            <img
+              src="img/basket-icon.png"
+              class="basket-img"
+              alt="Shopping basket icon"
+            />
+            <span class="basket-text">View shopping basket</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" role="main">
+      <div class="profile-container">
+        <div class="profile-header">
+          <h1>🍎 My Account</h1>
+          <p id="welcomeMessage">Welcome back!</p>
+        </div>
+        
+        <div class="profile-tabs">
+          <button class="tab-btn active" onclick="showTab('profile')">Profile</button>
+          <button class="tab-btn" onclick="showTab('orders')">My Orders</button>
+          <button class="tab-btn" onclick="showTab('tracking')">Order Tracking</button>
+        </div>
+        
+        <!-- Profile Tab -->
+        <div id="profile-tab" class="tab-content active">
+          <div class="profile-form">
+            <h2>Personal Information</h2>
+            
+            <div id="profileMessageContainer"></div>
+            
+            <form id="profileForm">
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" required />
+              </div>
+              
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" required />
+              </div>
+              
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required readonly />
+              </div>
+              
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" />
+              </div>
+              
+              <div class="form-group">
+                <label for="address">Delivery Address</label>
+                <textarea id="address" name="address" rows="3"></textarea>
+              </div>
+              
+              <button type="submit" class="btn" id="updateProfileBtn">
+                Update Profile
+              </button>
+            </form>
+          </div>
+        </div>
+        
+        <!-- Orders Tab -->
+        <div id="orders-tab" class="tab-content">
+          <h2>Order History</h2>
+          <div id="ordersList" class="orders-list">
+            <!-- Orders will be loaded here -->
+          </div>
+        </div>
+        
+        <!-- Tracking Tab -->
+        <div id="tracking-tab" class="tab-content">
+          <h2>Track Your Order</h2>
+          <div class="profile-form">
+            <div class="form-group">
+              <label for="trackingOrderId">Order ID</label>
+              <input 
+                type="text" 
+                id="trackingOrderId" 
+                placeholder="Enter your order ID (e.g., ORD-1234567890)"
+              />
+            </div>
+            <button class="btn" onclick="trackOrder()">Track Order</button>
+            
+            <div id="trackingResult"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="auth.js"></script>
+    <script src="shop.js"></script>
+    <script>
+      // Check if user is logged in
+      if (!authSystem.isLoggedIn()) {
+        window.location.href = 'login.html';
+      }
+      
+      // Load user data on page load
+      document.addEventListener('DOMContentLoaded', function() {
+        loadUserProfile();
+        loadUserOrders();
+      });
+      
+      // Load user profile data
+      function loadUserProfile() {
+        const user = authSystem.getCurrentUser();
+        
+        document.getElementById('welcomeMessage').textContent = 
+          `Welcome back, ${user.firstName} ${user.lastName}!`;
+        
+        document.getElementById('firstName').value = user.firstName || '';
+        document.getElementById('lastName').value = user.lastName || '';
+        document.getElementById('email').value = user.email || '';
+        document.getElementById('phone').value = user.phone || '';
+        document.getElementById('address').value = user.address || '';
+      }
+      
+      // Handle profile form submission
+      document.getElementById('profileForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const updateBtn = document.getElementById('updateProfileBtn');
+        const messageContainer = document.getElementById('profileMessageContainer');
+        
+        const formData = new FormData(this);
+        const userData = {
+          firstName: formData.get('firstName'),
+          lastName: formData.get('lastName'),
+          phone: formData.get('phone'),
+          address: formData.get('address')
+        };
+        
+        updateBtn.disabled = true;
+        updateBtn.textContent = 'Updating...';
+        
+        try {
+          const result = authSystem.updateProfile(userData);
+          
+          messageContainer.innerHTML = `
+            <div class="message success">
+              ${result.message}
+            </div>
+          `;
+          
+          // Update welcome message
+          document.getElementById('welcomeMessage').textContent = 
+            `Welcome back, ${userData.firstName} ${userData.lastName}!`;
+          
+        } catch (error) {
+          messageContainer.innerHTML = `
+            <div class="message error">
+              ${error.message}
+            </div>
+          `;
+        } finally {
+          updateBtn.disabled = false;
+          updateBtn.textContent = 'Update Profile';
+        }
+      });
+      
+      // Load user orders
+      function loadUserOrders() {
+        const orders = orderSystem.getUserOrders();
+        const ordersList = document.getElementById('ordersList');
+        
+        if (orders.length === 0) {
+          ordersList.innerHTML = `
+            <div class="empty-state">
+              <h3>No orders yet</h3>
+              <p>You haven't placed any orders yet. Start shopping to see your orders here!</p>
+              <a href="index.html" class="btn">Start Shopping</a>
+            </div>
+          `;
+          return;
+        }
+        
+        ordersList.innerHTML = orders.map(order => `
+          <div class="order-card">
+            <div class="order-header">
+              <div>
+                <div class="order-id">${order.id}</div>
+                <div style="color: #666; font-size: 0.9rem;">
+                  ${new Date(order.orderDate).toLocaleDateString()}
+                </div>
+              </div>
+              <span class="order-status ${order.status}">${order.status.replace('_', ' ')}</span>
+            </div>
+            
+            <div class="order-items">
+              ${order.items.map(item => {
+                if (item.startsWith('bundle_')) {
+                  const bundleId = item.replace('bundle_', '');
+                  const bundle = BUNDLES[bundleId];
+                  return `<div class="order-item">
+                    <span>${bundle ? bundle.emoji + ' ' + bundle.name + ' Bundle' : item}</span>
+                    <span>$8.99</span>
+                  </div>`;
+                } else {
+                  const product = PRODUCTS[item];
+                  const prices = { apple: 2.99, banana: 1.99, lemon: 3.49, pear: 3.29 };
+                  return `<div class="order-item">
+                    <span>${product ? product.emoji + ' ' + product.name : item}</span>
+                    <span>$${prices[item] || 2.99}</span>
+                  </div>`;
+                }
+              }).join('')}
+            </div>
+            
+            <div class="order-total">Total: $${order.total}</div>
+            
+            ${order.status !== 'delivered' && order.status !== 'cancelled' ? 
+              `<button class="track-btn" onclick="trackSpecificOrder('${order.id}')">
+                Track Order
+              </button>` : ''}
+          </div>
+        `).join('');
+      }
+      
+      // Tab switching
+      function showTab(tabName) {
+        // Hide all tabs
+        document.querySelectorAll('.tab-content').forEach(tab => {
+          tab.classList.remove('active');
+        });
+        
+        // Remove active class from all buttons
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        
+        // Show selected tab
+        document.getElementById(tabName + '-tab').classList.add('active');
+        event.target.classList.add('active');
+      }
+      
+      // Track order function
+      function trackOrder() {
+        const orderId = document.getElementById('trackingOrderId').value.trim();
+        if (!orderId) {
+          alert('Please enter an order ID');
+          return;
+        }
+        
+        trackSpecificOrder(orderId);
+      }
+      
+      function trackSpecificOrder(orderId) {
+        const order = orderSystem.getOrderById(orderId);
+        const resultContainer = document.getElementById('trackingResult');
+        
+        if (!order) {
+          resultContainer.innerHTML = `
+            <div class="message error">
+              Order not found. Please check your order ID.
+            </div>
+          `;
+          return;
+        }
+        
+        // Check if this order belongs to the current user
+        if (order.userId !== authSystem.getCurrentUser().id) {
+          resultContainer.innerHTML = `
+            <div class="message error">
+              You can only track your own orders.
+            </div>
+          `;
+          return;
+        }
+        
+        resultContainer.innerHTML = `
+          <div class="order-card" style="margin-top: 1rem;">
+            <div class="order-header">
+              <div>
+                <div class="order-id">${order.id}</div>
+                <div style="color: #666; font-size: 0.9rem;">
+                  Ordered on ${new Date(order.orderDate).toLocaleDateString()}
+                </div>
+              </div>
+              <span class="order-status ${order.status}">${order.status.replace('_', ' ')}</span>
+            </div>
+            
+            <h4>Order Status History:</h4>
+            <div style="margin-left: 1rem;">
+              ${order.statusHistory.map(status => `
+                <div style="margin: 0.5rem 0; padding: 0.5rem; background: #f8f9fa; border-radius: 5px;">
+                  <strong>${status.status.replace('_', ' ').toUpperCase()}</strong><br>
+                  <small>${new Date(status.timestamp).toLocaleString()}</small><br>
+                  <em>${status.message}</em>
+                </div>
+              `).join('')}
+            </div>
+            
+            ${order.estimatedDelivery && order.status !== 'delivered' ? `
+              <div style="margin-top: 1rem; padding: 1rem; background: #e8f5e8; border-radius: 5px;">
+                <strong>Estimated Delivery:</strong> ${new Date(order.estimatedDelivery).toLocaleString()}
+              </div>
+            ` : ''}
+          </div>
+        `;
+        
+        // Set the order ID in the input field
+        document.getElementById('trackingOrderId').value = orderId;
+      }
+    </script>
+  </body>
+</html>

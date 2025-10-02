@@ -5,6 +5,162 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Checkout - Complete Your Order - Fruit Shop</title>
     <link rel="stylesheet" href="style.css" />
+    <style>
+      .checkout-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+      }
+      
+      .checkout-sections {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+      
+      .checkout-section {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      
+      .checkout-section h3 {
+        margin-bottom: 1rem;
+        color: #4CAF50;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 0.5rem;
+      }
+      
+      .order-summary {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+      }
+      
+      .order-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #eee;
+      }
+      
+      .order-item:last-child {
+        border-bottom: none;
+        font-weight: bold;
+        margin-top: 0.5rem;
+        padding-top: 1rem;
+        border-top: 2px solid #4CAF50;
+      }
+      
+      .form-group {
+        margin-bottom: 1rem;
+      }
+      
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        color: #333;
+      }
+      
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+        box-sizing: border-box;
+      }
+      
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: #4CAF50;
+      }
+      
+      .login-prompt {
+        background: #e8f5e8;
+        border: 1px solid #4CAF50;
+        border-radius: 10px;
+        padding: 1.5rem;
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      
+      .login-prompt h3 {
+        color: #4CAF50;
+        margin-bottom: 1rem;
+      }
+      
+      .btn {
+        background: #4CAF50;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0.25rem;
+      }
+      
+      .btn:hover {
+        background: #45a049;
+      }
+      
+      .btn-secondary {
+        background: #6c757d;
+      }
+      
+      .btn-secondary:hover {
+        background: #545b62;
+      }
+      
+      .btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+      
+      .success-message {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+        border-radius: 10px;
+        padding: 2rem;
+        text-align: center;
+        margin: 2rem 0;
+      }
+      
+      .success-message h2 {
+        color: #155724;
+        margin-bottom: 1rem;
+      }
+      
+      .order-confirmation {
+        background: white;
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-top: 1rem;
+      }
+      
+      @media (max-width: 768px) {
+        .checkout-sections {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
   </head>
   <body>
     <header role="banner">
@@ -25,6 +181,7 @@
             <a href="bundles.html">Bundles</a>
             <a href="personality-quiz.html" class="quiz-link">🌟 Fruit Quiz</a>
           </div>
+          <div class="auth-links"></div>
           <a
             href="basket.html"
             class="basket-link"
@@ -41,60 +198,381 @@
         </nav>
       </div>
     </header>
+
     <main id="main-content" role="main">
-      <div class="content-box">
-        <h1>Checkout</h1>
-        <form id="checkoutForm" role="form" aria-label="Checkout form">
-          <div class="form-group">
-            <label for="name">Name:</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              required
-              aria-required="true"
-              aria-label="Enter your full name"
-            />
+      <div class="checkout-container">
+        <h1 style="text-align: center; color: #4CAF50; margin-bottom: 2rem;">
+          🛒 Complete Your Order
+        </h1>
+        
+        <!-- Login Prompt for Guest Users -->
+        <div id="loginPrompt" class="login-prompt" style="display: none;">
+          <h3>🔐 Login for Better Experience</h3>
+          <p>Login to track your orders and save your delivery information</p>
+          <a href="login.html" class="btn">Login</a>
+          <a href="register.html" class="btn btn-secondary">Register</a>
+          <button class="btn btn-secondary" onclick="continueAsGuest()">Continue as Guest</button>
+        </div>
+        
+        <!-- Order Summary -->
+        <div class="order-summary">
+          <h3>🍎 Order Summary</h3>
+          <div id="orderItems">
+            <!-- Order items will be loaded here -->
           </div>
-          <div class="form-group">
-            <label for="address">Address:</label>
-            <input
-              type="text"
-              id="address"
-              name="address"
-              required
-              aria-required="true"
-              aria-label="Enter your delivery address"
-            />
+        </div>
+        
+        <!-- Checkout Form -->
+        <div id="checkoutForm" style="display: none;">
+          <div class="checkout-sections">
+            <!-- Delivery Information -->
+            <div class="checkout-section">
+              <h3>🚚 Delivery Information</h3>
+              
+              <form id="deliveryForm">
+                <div class="form-group">
+                  <label for="customerName">Full Name</label>
+                  <input
+                    type="text"
+                    id="customerName"
+                    name="customerName"
+                    required
+                    placeholder="Enter your full name"
+                  />
+                </div>
+                
+                <div class="form-group">
+                  <label for="customerEmail">Email Address</label>
+                  <input
+                    type="email"
+                    id="customerEmail"
+                    name="customerEmail"
+                    required
+                    placeholder="Enter your email"
+                  />
+                </div>
+                
+                <div class="form-group">
+                  <label for="customerPhone">Phone Number</label>
+                  <input
+                    type="tel"
+                    id="customerPhone"
+                    name="customerPhone"
+                    required
+                    placeholder="Enter your phone number"
+                  />
+                </div>
+                
+                <div class="form-group">
+                  <label for="deliveryAddress">Delivery Address</label>
+                  <textarea
+                    id="deliveryAddress"
+                    name="deliveryAddress"
+                    required
+                    placeholder="Enter your complete delivery address"
+                    rows="3"
+                  ></textarea>
+                </div>
+                
+                <div class="form-group">
+                  <label for="deliveryTime">Preferred Delivery Time</label>
+                  <select id="deliveryTime" name="deliveryTime">
+                    <option value="morning">Morning (9 AM - 12 PM)</option>
+                    <option value="afternoon">Afternoon (12 PM - 5 PM)</option>
+                    <option value="evening">Evening (5 PM - 8 PM)</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="specialInstructions">Special Instructions (Optional)</label>
+                  <textarea
+                    id="specialInstructions"
+                    name="specialInstructions"
+                    placeholder="Any special delivery instructions"
+                    rows="2"
+                  ></textarea>
+                </div>
+              </form>
+            </div>
+            
+            <!-- Payment Information -->
+            <div class="checkout-section">
+              <h3>💳 Payment Information</h3>
+              
+              <div class="form-group">
+                <label for="paymentMethod">Payment Method</label>
+                <select id="paymentMethod" name="paymentMethod">
+                  <option value="cash">Cash on Delivery</option>
+                  <option value="card">Credit/Debit Card</option>
+                  <option value="digital">Digital Wallet</option>
+                </select>
+              </div>
+              
+              <div id="cardDetails" style="display: none;">
+                <div class="form-group">
+                  <label for="cardNumber">Card Number</label>
+                  <input
+                    type="text"
+                    id="cardNumber"
+                    placeholder="1234 5678 9012 3456"
+                    maxlength="19"
+                  />
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                  <div class="form-group">
+                    <label for="expiryDate">Expiry Date</label>
+                    <input
+                      type="text"
+                      id="expiryDate"
+                      placeholder="MM/YY"
+                      maxlength="5"
+                    />
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="cvv">CVV</label>
+                    <input
+                      type="text"
+                      id="cvv"
+                      placeholder="123"
+                      maxlength="3"
+                    />
+                  </div>
+                </div>
+              </div>
+              
+              <div style="background: #fff3cd; border: 1px solid #ffeeba; border-radius: 5px; padding: 1rem; margin-top: 1rem;">
+                <strong>🔒 Secure Payment</strong><br>
+                <small>This is a demo. No real payment processing occurs.</small>
+              </div>
+            </div>
           </div>
-          <button
-            type="submit"
-            class="cart-action-btn"
-            aria-label="Place order"
-          >
-            Place Order
-          </button>
-        </form>
-        <div
-          id="successMsg"
-          style="display: none; color: green; margin-top: 1rem"
-          role="alert"
-          aria-live="polite"
-        >
-          Thank you for your order!
+          
+          <div style="text-align: center;">
+            <button class="btn" onclick="placeOrder()" id="placeOrderBtn" style="font-size: 1.2rem; padding: 1rem 2rem;">
+              🛒 Place Order
+            </button>
+          </div>
+        </div>
+        
+        <!-- Success Message -->
+        <div id="successMessage" style="display: none;">
+          <!-- Success content will be inserted here -->
         </div>
       </div>
     </main>
+
     <script src="shop.js"></script>
+    <script src="auth.js"></script>
     <script>
-      renderBasket();
-      document.getElementById("checkoutForm").onsubmit = function (e) {
-        e.preventDefault();
-        document.getElementById("successMsg").style.display = "block";
-        document.getElementById("checkoutForm").style.display = "none";
-        clearBasket();
-        renderBasket();
-      };
+      let currentOrder = null;
+      
+      document.addEventListener('DOMContentLoaded', function() {
+        loadOrderSummary();
+        checkLoginStatus();
+        setupPaymentMethodHandler();
+      });
+      
+      function loadOrderSummary() {
+        const basket = getBasket();
+        const orderItemsContainer = document.getElementById('orderItems');
+        
+        if (basket.length === 0) {
+          orderItemsContainer.innerHTML = `
+            <div style="text-align: center; padding: 2rem;">
+              <h3>Your basket is empty</h3>
+              <p>Add some fruits to your basket before checkout</p>
+              <a href="index.html" class="btn">Continue Shopping</a>
+            </div>
+          `;
+          return;
+        }
+        
+        const prices = { apple: 2.99, banana: 1.99, lemon: 3.49, pear: 3.29 };
+        let total = 0;
+        let itemsHTML = '';
+        
+        basket.forEach(item => {
+          if (item.startsWith('bundle_')) {
+            const bundleId = item.replace('bundle_', '');
+            const bundle = BUNDLES[bundleId];
+            if (bundle) {
+              const price = 8.99;
+              total += price;
+              itemsHTML += `
+                <div class="order-item">
+                  <span>${bundle.emoji} ${bundle.name} Bundle</span>
+                  <span>$${price}</span>
+                </div>
+              `;
+            }
+          } else {
+            const product = PRODUCTS[item];
+            if (product) {
+              const price = prices[item] || 2.99;
+              total += price;
+              itemsHTML += `
+                <div class="order-item">
+                  <span>${product.emoji} ${product.name}</span>
+                  <span>$${price}</span>
+                </div>
+              `;
+            }
+          }
+        });
+        
+        itemsHTML += `
+          <div class="order-item">
+            <span>Total</span>
+            <span>$${total.toFixed(2)}</span>
+          </div>
+        `;
+        
+        orderItemsContainer.innerHTML = itemsHTML;
+      }
+      
+      function checkLoginStatus() {
+        if (authSystem.isLoggedIn()) {
+          const user = authSystem.getCurrentUser();
+          
+          // Pre-fill form with user data
+          document.getElementById('customerName').value = `${user.firstName} ${user.lastName}`;
+          document.getElementById('customerEmail').value = user.email;
+          document.getElementById('customerPhone').value = user.phone || '';
+          document.getElementById('deliveryAddress').value = user.address || '';
+          
+          // Show checkout form directly
+          document.getElementById('checkoutForm').style.display = 'block';
+        } else {
+          // Show login prompt
+          document.getElementById('loginPrompt').style.display = 'block';
+        }
+      }
+      
+      function continueAsGuest() {
+        document.getElementById('loginPrompt').style.display = 'none';
+        document.getElementById('checkoutForm').style.display = 'block';
+      }
+      
+      function setupPaymentMethodHandler() {
+        document.getElementById('paymentMethod').addEventListener('change', function() {
+          const cardDetails = document.getElementById('cardDetails');
+          if (this.value === 'card') {
+            cardDetails.style.display = 'block';
+          } else {
+            cardDetails.style.display = 'none';
+          }
+        });
+      }
+      
+      function placeOrder() {
+        const basket = getBasket();
+        if (basket.length === 0) {
+          alert('Your basket is empty!');
+          return;
+        }
+        
+        // Get form data
+        const deliveryDetails = {
+          customerName: document.getElementById('customerName').value,
+          customerEmail: document.getElementById('customerEmail').value,
+          customerPhone: document.getElementById('customerPhone').value,
+          deliveryAddress: document.getElementById('deliveryAddress').value,
+          deliveryTime: document.getElementById('deliveryTime').value,
+          specialInstructions: document.getElementById('specialInstructions').value,
+          paymentMethod: document.getElementById('paymentMethod').value
+        };
+        
+        // Validate required fields
+        if (!deliveryDetails.customerName || !deliveryDetails.customerEmail || 
+            !deliveryDetails.customerPhone || !deliveryDetails.deliveryAddress) {
+          alert('Please fill in all required fields');
+          return;
+        }
+        
+        const placeOrderBtn = document.getElementById('placeOrderBtn');
+        placeOrderBtn.disabled = true;
+        placeOrderBtn.textContent = 'Processing Order...';
+        
+        try {
+          if (authSystem.isLoggedIn()) {
+            // Create order for logged-in user
+            currentOrder = orderSystem.createOrder(basket, deliveryDetails);
+            showSuccessMessage(currentOrder);
+            
+            // Start order simulation
+            orderSystem.simulateOrderProgress(currentOrder.id);
+          } else {
+            // Create order for guest user (simplified)
+            currentOrder = {
+              id: 'ORD-GUEST-' + Date.now(),
+              items: basket,
+              deliveryDetails,
+              status: 'pending',
+              orderDate: new Date().toISOString(),
+              total: calculateGuestTotal(basket)
+            };
+            
+            showSuccessMessage(currentOrder);
+            clearBasket();
+          }
+          
+        } catch (error) {
+          alert('Error placing order: ' + error.message);
+          placeOrderBtn.disabled = false;
+          placeOrderBtn.textContent = '🛒 Place Order';
+        }
+      }
+      
+      function calculateGuestTotal(basketItems) {
+        const prices = { apple: 2.99, banana: 1.99, lemon: 3.49, pear: 3.29 };
+        let total = 0;
+        
+        basketItems.forEach(item => {
+          if (item.startsWith('bundle_')) {
+            total += 8.99;
+          } else {
+            total += prices[item] || 2.99;
+          }
+        });
+        
+        return parseFloat(total.toFixed(2));
+      }
+      
+      function showSuccessMessage(order) {
+        document.getElementById('checkoutForm').style.display = 'none';
+        document.getElementById('loginPrompt').style.display = 'none';
+        
+        const successContainer = document.getElementById('successMessage');
+        successContainer.innerHTML = `
+          <div class="success-message">
+            <h2>🎉 Order Placed Successfully!</h2>
+            <p>Thank you for your order. Your fresh fruits are on their way!</p>
+            
+            <div class="order-confirmation">
+              <h3>Order Details</h3>
+              <p><strong>Order ID:</strong> ${order.id}</p>
+              <p><strong>Total:</strong> $${order.total}</p>
+              <p><strong>Status:</strong> ${order.status}</p>
+              <p><strong>Order Date:</strong> ${new Date(order.orderDate).toLocaleDateString()}</p>
+              
+              ${order.estimatedDelivery ? 
+                `<p><strong>Estimated Delivery:</strong> ${new Date(order.estimatedDelivery).toLocaleString()}</p>` : ''}
+              
+              <div style="margin-top: 1.5rem;">
+                ${authSystem.isLoggedIn() ? 
+                  `<a href="profile.html" class="btn">Track Your Order</a>` :
+                  `<a href="register.html" class="btn">Create Account to Track Orders</a>`
+                }
+                <a href="index.html" class="btn btn-secondary">Continue Shopping</a>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        successContainer.style.display = 'block';
+      }
     </script>
   </body>
 </html>
