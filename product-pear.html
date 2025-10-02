@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fresh Pear - Fruit Shop</title>
+    <title>Fresh Pear - CCS Fruit</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -13,11 +13,12 @@
           <img
             src="img/fruit-shop-logo.webp"
             class="logo-img"
-            alt="Fruit Shop Logo"
+            alt="CCS Fruit Logo"
           />
-          <span class="products-text" style="text-align: center">
-            View Products
-          </span>
+          <div style="display: flex; flex-direction: column;">
+            <h1 class="site-title">CCS Fruit</h1>
+            <span class="products-text">Premium Fresh Fruits</span>
+          </div>
         </a>
         <nav role="navigation" aria-label="Main navigation">
           <div class="nav-links">
@@ -25,6 +26,7 @@
             <a href="bundles.html">Bundles</a>
             <a href="personality-quiz.html" class="quiz-link">🌟 Fruit Quiz</a>
           </div>
+          <div class="auth-links"></div>
           <a
             href="basket.html"
             class="basket-link"
@@ -63,6 +65,7 @@
       </div>
     </main>
     <script src="shop.js"></script>
+    <script src="auth.js"></script>
     <script src="fruit-facts.js"></script>
     <script>
       document.getElementById("addToBasket").onclick = function () {

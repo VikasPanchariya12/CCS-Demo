@@ -17,11 +17,12 @@ body {
   color: #222;
 }
 header {
-  background: #f9f6f1;
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
   padding: 1.2rem 2.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
 }
 nav a {
   margin-right: 1.2rem;
@@ -115,10 +116,17 @@ input[type="text"]:focus {
   cursor: pointer;
 }
 .logo-img {
-  height: 300px;
+  height: 80px;
   margin-right: 1rem;
   vertical-align: middle;
   display: inline-block;
+}
+
+.products-text {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .basket-link {
   display: flex;
@@ -127,11 +135,28 @@ input[type="text"]:focus {
   justify-content: center;
   position: relative;
   text-align: center;
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  padding: 0.8rem 1rem;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
+
+.basket-link:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
 .basket-text {
   display: block;
   margin-top: 0.5rem;
-  font-size: 1.5rem;
+  font-size: 0.95rem;
+  text-align: center;
 }
 
 .products-text {
@@ -174,9 +199,30 @@ input[type="text"]:focus {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  gap: 2.5rem;
+  justify-content: space-between;
   width: 100%;
+  max-width: 1200px;
+  gap: 2rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none !important;
+  color: white !important;
+}
+
+.logo:hover {
+  color: #e0e7ff !important;
+}
+
+.site-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: white;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  letter-spacing: 1px;
 }
 .product-li-link {
   display: block;
@@ -423,31 +469,54 @@ input[type="text"]:focus {
 }
 
 .nav-links a {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  transition: color 0.2s, transform 0.2s;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.9);
+  padding: 0.6rem 1.2rem;
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .nav-links a:hover {
-  transform: scale(1.05);
-  background-color: rgba(0,0,0,0.05);
+  transform: translateY(-1px);
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .nav-links a.active {
-  color: #0077ff;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
   font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .nav-links .quiz-link {
-  color: #2ecc71;
-  background-color: rgba(46, 204, 113, 0.1);
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #7c2d12;
+  border: 1px solid rgba(252, 211, 77, 0.3);
 }
 
 .nav-links .quiz-link:hover {
-  color: #27ae60;
-  background-color: rgba(46, 204, 113, 0.2);
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #7c2d12;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.3);
+}
+
+.nav-links .subscription-link {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.nav-links .subscription-link:hover {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.3);
 }
 
 /* Quiz Styles */
@@ -735,7 +804,7 @@ input[type="text"]:focus {
     margin-right: 0;
   }
   .basket-img {
-    height: 120px;
+    height: 60px;
   }
   .basket-text,
   .products-text {
@@ -911,4 +980,62 @@ input[type="text"]:focus {
   margin: 0;
   color: #444;
   font-size: 1.2rem;
+}
+
+/* Authentication Links Styling */
+.auth-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.user-greeting {
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-right: 0.5rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.profile-link,
+.login-link,
+.register-link {
+  background: rgba(255, 255, 255, 0.15);
+  color: white !important;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  text-decoration: none !important;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.profile-link:hover,
+.login-link:hover,
+.register-link:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.logout-btn {
+  background: rgba(239, 68, 68, 0.9);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.logout-btn:hover {
+  background: rgba(220, 38, 38, 1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
 }
