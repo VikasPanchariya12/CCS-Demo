@@ -52,6 +52,24 @@ const FRUIT_FACTS = {
       "Supports skin health"
     ],
     season: "Peak season from November to March"
+  },
+  pear: {
+    nutrition: {
+      calories: "102 kcal",
+      fiber: "6g",
+      vitamin_c: "7% DV"
+    },
+    facts: [
+      "Pears ripen from the inside out, unlike most fruits",
+      "There are over 3,000 known varieties of pears worldwide",
+      "Pears are often called the 'butter fruit' for their smooth texture"
+    ],
+    benefits: [
+      "High in fiber for digestive health",
+      "Contains antioxidants for heart health",
+      "Supports immune system function"
+    ],
+    season: "Peak season from August to February"
   }
 };
 
